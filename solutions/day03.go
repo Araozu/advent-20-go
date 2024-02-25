@@ -2,9 +2,9 @@ package solutions
 
 import "strings"
 
-func countTrees(input string, left, down int) int {
+func countTrees(input string, right, down int) int {
 	verticalPos := down
-	horizontalPos := left
+	horizontalPos := right
 	lines := strings.Split(input, "\n")
 	width := len(lines[0])
 	treesCount := 0
@@ -17,7 +17,7 @@ func countTrees(input string, left, down int) int {
 			treesCount += 1
 		}
 
-		horizontalPos += left
+		horizontalPos += right
 		horizontalPos = horizontalPos % width
 		verticalPos += down
 	}
@@ -32,5 +32,13 @@ func Day03Part01(isTest bool) int {
 }
 
 func Day03Part02(isTest bool) int {
-	return -1
+	input := ReadInput("03", isTest)
+
+	amount1 := countTrees(input, 1, 1)
+	amount2 := countTrees(input, 3, 1)
+	amount3 := countTrees(input, 5, 1)
+	amount4 := countTrees(input, 7, 1)
+	amount5 := countTrees(input, 1, 2)
+
+	return amount1 * amount2 * amount3 * amount4 * amount5
 }

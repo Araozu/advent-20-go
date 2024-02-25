@@ -14,7 +14,7 @@ func main() {
 	runAndBenchmark("02", "2", false, solutions.Day02Part02)
 
 	runAndBenchmark("03", "1", false, solutions.Day03Part01)
-	runAndBenchmark("03", "2", true, solutions.Day03Part02)
+	runAndBenchmark("03", "2", false, solutions.Day03Part02)
 }
 
 type execute func(bool) int
@@ -24,5 +24,5 @@ func runAndBenchmark(day, part string, isTest bool, fn execute) {
 	computation := fn(isTest)
 	endMs := time.Now().UnixMicro()
 	duration := endMs - startMs
-	fmt.Printf("Day %s part %s:\t%10d\t%5d micros.\n", day, part, computation, duration)
+	fmt.Printf("Day %s part %s:\t%12d\t%5d micros.\n", day, part, computation, duration)
 }
