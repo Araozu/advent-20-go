@@ -10,8 +10,11 @@ func main() {
 	runAndBenchmark("01", "1", false, solutions.Day01Part01)
 	runAndBenchmark("01", "2", false, solutions.Day01Part02)
 
-	runAndBenchmark("02", "1", false, solutions.Day01Part01)
-	runAndBenchmark("02", "2", false, solutions.Day01Part02)
+	runAndBenchmark("02", "1", false, solutions.Day02Part01)
+	runAndBenchmark("02", "2", false, solutions.Day02Part02)
+
+	runAndBenchmark("03", "1", false, solutions.Day03Part01)
+	runAndBenchmark("03", "2", true, solutions.Day03Part02)
 }
 
 type execute func(bool) int
