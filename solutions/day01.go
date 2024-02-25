@@ -45,7 +45,7 @@ func Day01Part02(isTest bool) int {
 		for j := i + 1; j < arrLen; j += 1 {
 			for k := j + 1; k < arrLen; k += 1 {
 				if values[i]+values[j]+values[k] == 2020 {
-					return (values[i] * values[j] * values[k])
+					return values[i] * values[j] * values[k]
 				}
 			}
 		}
