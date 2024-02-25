@@ -1,13 +1,12 @@
 package solutions
 
 import (
-	"fmt"
 	"strconv"
 	"strings"
 )
 
-func Day01Part01() {
-	input := ReadInput("01", true)
+func Day01Part01(isTest bool) int {
+	input := ReadInput("01", isTest)
 	values := strings.Split(input, "\n")
 	remainders := make(map[int]bool)
 
@@ -20,16 +19,17 @@ func Day01Part01() {
 		currentRemainder := 2020 - value
 
 		if _, err := remainders[currentRemainder]; err {
-			fmt.Println(value * currentRemainder)
-			break
+			return value * currentRemainder
 		} else {
 			remainders[value] = true
 		}
 	}
+
+	return -1
 }
 
-func Day01Part02() {
-	input := ReadInput("01", false)
+func Day01Part02(isTest bool) int {
+	input := ReadInput("01", isTest)
 	strValues := strings.Split(input, "\n")
 	values := make([]int, len(strValues))
 	for i, valueStr := range strValues {
@@ -45,10 +45,11 @@ func Day01Part02() {
 		for j := i + 1; j < arrLen; j += 1 {
 			for k := j + 1; k < arrLen; k += 1 {
 				if values[i]+values[j]+values[k] == 2020 {
-					fmt.Println(values[i] * values[j] * values[k])
-					return
+					return (values[i] * values[j] * values[k])
 				}
 			}
 		}
 	}
+
+	return -1
 }

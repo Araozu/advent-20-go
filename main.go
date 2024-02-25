@@ -1,7 +1,11 @@
 package main
 
-import "advent-20/solutions"
+import (
+	"advent-20/solutions"
+	"fmt"
+)
 
 func main() {
-	solutions.Day01Part02()
+	fmt.Println("Day 01 part 1:\t", solutions.Day01Part01(false))
+	fmt.Println("Day 01 part 2:\t", solutions.Day01Part02(false))
 }
