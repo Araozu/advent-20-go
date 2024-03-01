@@ -30,6 +30,30 @@ func Day06Part01(isTest bool) int {
 }
 
 func Day06Part02(isTest bool) int {
+	input := ReadInput("06", isTest)
+	groups := strings.Split(input, "\n\n")
 
-	return -1
+	sum := 0
+
+	for _, group := range groups {
+		persons := strings.Split(group, "\n")
+		personAmount := len(persons)
+
+		frequency := make(map[rune]int)
+
+		for _, person := range persons {
+			for _, letter := range person {
+				previousValue, _ := frequency[letter]
+				frequency[letter] = previousValue + 1
+			}
+		}
+
+		for _, value := range frequency {
+			if value == personAmount {
+				sum += 1
+			}
+		}
+	}
+
+	return sum
 }
