@@ -1,21 +1,21 @@
 package solutions
 
 import (
-	"regexp"
 	"slices"
 	"strconv"
 	"strings"
 )
 
 func seatStrToSeatId(seat string) int {
-	lowRegex := regexp.MustCompile("[FL]")
-	highRegex := regexp.MustCompile("[BR]")
+	rowStr := seat[:7]
+	rowStr = strings.ReplaceAll(rowStr, "F", "0")
+	rowStr = strings.ReplaceAll(rowStr, "B", "1")
+	columnStr := seat[7:]
+	columnStr = strings.ReplaceAll(columnStr, "L", "0")
+	columnStr = strings.ReplaceAll(columnStr, "R", "1")
 
-	seatStr := lowRegex.ReplaceAllString(seat, "0")
-	seatStr = highRegex.ReplaceAllString(seatStr, "1")
-
-	row, _ := strconv.ParseInt(seatStr[:7], 2, 64)
-	column, _ := strconv.ParseInt(seatStr[7:], 2, 64)
+	row, _ := strconv.ParseInt(rowStr, 2, 64)
+	column, _ := strconv.ParseInt(columnStr, 2, 64)
 
 	return int(row*8 + column)
 }
