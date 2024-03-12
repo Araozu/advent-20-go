@@ -6,10 +6,12 @@ import (
 )
 
 type Bag struct {
-	color             string
-	contents          []BagContent
-	containsShinyGold bool
-	contentsCount     int
+	color    string
+	contents []BagContent
+	// -1 if not set, 0 if it doesn't contain, 1 if it does
+	containsShinyGold int
+	// -1 if not counted yet
+	contentsCount int
 }
 
 type BagContent struct {
@@ -25,7 +27,7 @@ func parseBagStatement(bagStatement string) Bag {
 
 	// if no aditional bags
 	if bagContentsStr[:2] == "no" {
-		return Bag{color: bagColor, contents: make([]BagContent, 0), contentsCount: -1}
+		return Bag{color: bagColor, contents: make([]BagContent, 0), contentsCount: -1, containsShinyGold: -1}
 	}
 
 	// parse remainder bags
@@ -44,37 +46,32 @@ func parseBagStatement(bagStatement string) Bag {
 		bagContents[idx] = BagContent{count: bagCount, color: bagColor2}
 	}
 
-	/*
-		grammar for bag statements:
-
-		statement = bag color, "bags contain", (bag list | empty bag), "."
-		empty bag = "no other bags"
-		bag list = bag declaration, bag declaration+
-		bag declaration = number, bag color, "bag", "s"?
-		bag color = word, word
-	*/
-
-	return Bag{color: bagColor, contents: bagContents, contentsCount: -1}
+	return Bag{color: bagColor, contents: bagContents, contentsCount: -1, containsShinyGold: -1}
 }
 
-func bagContainsShinyGold(bagColor string, bagMap map[string]*Bag) bool {
-	bag := bagMap[bagColor]
-	if bag.containsShinyGold {
+func bagContainsShinyGold(bag *Bag, bagMap map[string]*Bag) bool {
+	if bag.containsShinyGold == 1 {
 		return true
+	}
+	if bag.containsShinyGold == 0 {
+		return false
 	}
 
 	// recursively search
 	for _, nextBag := range bag.contents {
 		if nextBag.color == "shiny gold" {
-			bag.containsShinyGold = true
+			bag.containsShinyGold = 1
 			return true
 		}
 
-		if bagContainsShinyGold(nextBag.color, bagMap) {
-			bag.containsShinyGold = true
+		nextBagF := bagMap[nextBag.color]
+		if bagContainsShinyGold(nextBagF, bagMap) {
+			bag.containsShinyGold = 1
 			return true
 		}
 	}
+
+	bag.containsShinyGold = 0
 
 	return false
 }
@@ -84,20 +81,18 @@ func Day07Part01(isTest bool) int {
 	groups := strings.Split(input, "\n")
 
 	bags := make(map[string]*Bag)
-	bagColors := make([]string, len(groups))
 
 	// parse and collect the bags
-	for i, statement := range groups {
+	for _, statement := range groups {
 		parsedBag := parseBagStatement(statement)
 		bags[parsedBag.color] = &parsedBag
-		bagColors[i] = parsedBag.color
 	}
 
 	shinyGoldContainers := 0
 
 	// process the bags
-	for _, bagColor := range bagColors {
-		if bagContainsShinyGold(bagColor, bags) {
+	for _, bag := range bags {
+		if bagContainsShinyGold(bag, bags) {
 			shinyGoldContainers += 1
 		}
 	}
@@ -119,6 +114,8 @@ func countInnerBags(bag *Bag, bagMap map[string]*Bag) int {
 
 		innerBagsCount += nextBagCount + nextBagCount*countInnerBags(nextBag, bagMap)
 	}
+
+	bag.contentsCount = innerBagsCount
 
 	return innerBagsCount
 }
