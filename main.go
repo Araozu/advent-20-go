@@ -27,6 +27,9 @@ func main() {
 
 	runAndBenchmark("07", "1", false, solutions.Day07Part01)
 	runAndBenchmark("07", "2", false, solutions.Day07Part02)
+
+	runAndBenchmark("08", "1", false, solutions.Day08Part01)
+	runAndBenchmark("08", "2", true, solutions.Day08Part02)
 }
 
 type execute func(bool) int
