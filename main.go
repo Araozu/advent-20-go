@@ -32,7 +32,7 @@ func main() {
 	runAndBenchmark("08", "2", false, solutions.Day08Part02)
 
 	runAndBenchmark("09", "1", false, solutions.Day09Part01)
-	runAndBenchmark("09", "2", true, solutions.Day09Part02)
+	runAndBenchmark("09", "2", false, solutions.Day09Part02)
 }
 
 type execute func(bool) int
