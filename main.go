@@ -7,6 +7,8 @@ import (
 )
 
 func main() {
+	fmt.Printf("===Problem===\t==solution==\t   ===time===\n")
+
 	runAndBenchmark("01", "1", false, solutions.Day01Part01)
 	runAndBenchmark("01", "2", false, solutions.Day01Part02)
 
@@ -33,6 +35,9 @@ func main() {
 
 	runAndBenchmark("09", "1", false, solutions.Day09Part01)
 	runAndBenchmark("09", "2", false, solutions.Day09Part02)
+
+	runAndBenchmark("10", "1", false, solutions.Day10Part01)
+	runAndBenchmark("10", "2", false, solutions.Day10Part02)
 }
 
 type execute func(bool) int
